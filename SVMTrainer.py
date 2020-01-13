@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,6 +16,8 @@ label = np.array([[0],[0],[0],[0],[0],[1],[1],[1],[1],[1]])
 data = np.vstack((rand1,rand2))
 data = np.array(data,dtype='float32')
 
+
+
 # 4 训练
 # ml  机器学习模块 SVM_create() 创建
 svm = cv2.ml.SVM_create() 
@@ -21,7 +25,7 @@ svm = cv2.ml.SVM_create()
 # 属性设置
 svm.setType(cv2.ml.SVM_C_SVC) # svm type
 svm.setKernel(cv2.ml.SVM_LINEAR) # line
-svm.setC(0.01)
+svm.setC(0.01) #c越大线的与两边的点距离越大
 
 # 训练
 result = svm.train(data,cv2.ml.ROW_SAMPLE,label)

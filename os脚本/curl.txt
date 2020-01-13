@@ -1,0 +1,1 @@
+os.system("curl {} --create-dirs -o {}".format(dataset_url, dataset_path))
