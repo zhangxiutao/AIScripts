@@ -1,5 +1,6 @@
 import cv2
-img = cv2.imread("img.jpg")
-hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-cv2.imshow("",hsv)
+from skimage.transform import pyramid_expand
+img = cv2.imread("wood-texture.jpg")
+expanded = pyramid_expand(img,upscale=2)
+cv2.imshow("",expanded)
 cv2.waitKey(0)
