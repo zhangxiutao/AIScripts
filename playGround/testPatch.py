@@ -35,7 +35,7 @@ def checkIfWanted(img):
     #erosion_black = cv2.erode(res_black,erosionKernel)
     #bw_image_black = cv2.cvtColor(cv2.cvtColor(erosion_black, cv2.COLOR_HSV2BGR), cv2.COLOR_RGB2GRAY)
     
-    print(cv2.countNonZero(bw_image_red))
+    print(cv2.countNonZero(res_black))
     # cv2.imshow("",bw_image_red)
     # cv2.waitKey(0)
     
@@ -46,5 +46,5 @@ def checkIfWanted(img):
         print("True")
         return True
 
-img = cv2.imread("../dataSet/playground/traffic_jam.jpeg")
+img = cv2.imread("../dataSet/playground/baustelle_1.jpg")
 checkIfWanted(img)
