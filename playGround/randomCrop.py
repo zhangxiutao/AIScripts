@@ -3,46 +3,30 @@ import random
 import os
 import argparse as ap
 
-if __name__ == "__main__":
-
-    # Parse the command line arguments
-    parser = ap.ArgumentParser()
-    parser.add_argument('-PS', "--posSrcDir", help="Path to the srcDir", required=True)
-    parser.add_argument('-PD','--posDstDir', help="Path to the dstDir", required=True)
-    parser.add_argument('-NS', "--negSrcDir", help="Path to the srcDir", required=True)
-    parser.add_argument('-ND','--negDstDir', help="Path to the dstDir", required=True)
-    args = vars(parser.parse_args())
-
-    posSrcDir=args["posSrcDir"]
-    posDstDir=args["posDstDir"]
-    
-dataDir="dataSet"
-srcDir="playground/traffic_jam_src"
-dstDir="playground/traffic_jam_dst"
+srcDir="autobahn"
+dstDir="cropped_autobahn"
 
 imgs = []
-for x in os.listdir(os.path.join("..",dataDir,srcDir)):
+for x in os.listdir(os.path.join(".",srcDir)):
     imgs.append(x)
-selected_imgs = random.sample(imgs,10)
+selected_imgs = random.sample(imgs,18)
 
 h=95
 w=35
 
-for fileName in os.listdir(os.path.join("..",dataDir,srcDir)):
+for fileName in os.listdir(os.path.join(".",srcDir)):
     if fileName in selected_imgs:
         print(fileName)
-        img = cv2.imread(os.path.join("..",dataDir,srcDir,fileName))
+        img = cv2.imread(os.path.join(".",srcDir,fileName))
         count=1
         while 1:
             if type(img) is not None:
                 y = random.randint(0, img.shape[0]-h)
                 x = random.randint(0, img.shape[1]-w)
                 cropImg = img[(y):(y + h), (x):(x + w)]
-		cropImg_flip = cv2.flip(cropImg, 1)
-                cv2.imwrite(os.path.join("..",dataDir,dstDir,fileName+str(count)+".jpg"), cropImg)
-		cv2.imwrite(os.path.join("..",dataDir,dstDir,fileName+"flip"+str(count)+".jpg"), cropImg_flip)
+                cv2.imwrite(os.path.join(".",dstDir,os.path.splitext(os.path.basename(fileName))[0]+str(count)+".jpg"), cropImg)
                 count+=1
-                if count==30:
+                if count==20:
                     break
             else:
                 break
