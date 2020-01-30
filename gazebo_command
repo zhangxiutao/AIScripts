@@ -10,7 +10,7 @@ rviz-test:
 roslaunch vehicle_gazebo_simulation_launcher rviz_test.launch
 
 docker:
-autoware/autoware:1.12.0-melodic-cuda
+docker commit containerID autoware/autoware:1.12.0-melodic-cuda
 
 sensor and car models:
 <xacro:include filename="$(find vehicle_model)/urdf/body.xacro" />
