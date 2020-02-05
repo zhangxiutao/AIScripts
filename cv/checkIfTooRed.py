@@ -22,14 +22,16 @@ def red_mask(img_cv2):
     h,s,red_gray=cv2.split(res_red)
 
     return red_gray
-img_origin = cv2.imread("../dataSet/test/back.png")
+img_origin = cv2.imread("../dataSet/playground/leitbakes.png")
 img = red_mask(img_origin)
 ret,thresh=cv2.threshold(img,127,255,0)
 contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 c = np.array(max(contours, key = cv2.contourArea))
-img_origin = cv2.drawContours(img_origin, [c], -1, (0,255,0), 3)
-print(img.shape[0])
-print(img.shape[1])
+print(cv2.contourArea(c))
+for contour in contours:
+    if cv2.contourArea(contour)>100 or cv2.contourArea(contour)<10:
+        img_contourfiltered = cv2.drawContours(thresh, [contour], -1, 0, thickness=cv2.FILLED)
+        #cv2.fillPoly(thresh, pts =contour, color=0)
 area = img.shape[0]*img.shape[1]
 nonZeros = cv2.findNonZero(img)
 numNonZero = cv2.countNonZero(img)
@@ -38,6 +40,6 @@ print("area",area)
 print("nonZero",numNonZero)
 print(nonZeros)
 print(np.mean(img))
-cv2.imshow("gray",img)
-cv2.imshow("contours",img_origin)
+cv2.imshow("gray",thresh)
+cv2.imshow("contours",img_contourfiltered)
 cv2.waitKey(0)
