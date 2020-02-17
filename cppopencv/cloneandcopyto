@@ -1,0 +1,10 @@
+I think, that using assignment is not the best way of matrix copying. If you want new full copy of the matrix, use:
+
+Mat a=b.clone(); 
+
+If you want copy matrix for replace the data from another matrix (for avoid memory reallocation) use:
+
+Mat a(b.size(),b.type());
+b.copyTo(a);
+
+When you assign one matrix to another, the counter of references of smart pointer to matrix data increased by one, when you release matrix (it can be done implicitly when leave code block) it decreases by one. When it becomes equal zero the allocated memory deallocated.

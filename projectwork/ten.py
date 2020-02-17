@@ -68,7 +68,7 @@ def red_mask(img_cv2):
 
     mask_red = mask0 + mask1
     res_red = cv2.bitwise_and(img_cv2, img_cv2, mask=mask_red)
-    
+
     #erosion
     # kernel = np.ones((5,5),np.uint8)
     # res_red = cv2.erode(res_red,kernel)
