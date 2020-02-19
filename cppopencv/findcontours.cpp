@@ -1,22 +1,11 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-#include <iostream>
+ 
 using namespace cv;
 using namespace std;
-
-void test2(int& i)
-{
-    cout << i << endl;
-}
-void test1()
-{
-    int i = 1;
-    test2(i);
-}
-
+ 
 int main(  )
 {
-    test1();
     Mat drawing1 = Mat::zeros( Size(400,200), CV_8UC1 );
     Mat drawing2 = Mat::zeros( Size(400,200), CV_8UC1 );
  

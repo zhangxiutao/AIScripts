@@ -1,33 +1,40 @@
 #include <opencv/cv.h>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
-static cv::Mat sta;
-const int s = 2;
-int a[s]={2,4};
-void func()
-{
-	cv::Mat f = (cv::Mat_<double>(2,2) << 5.0, 5.0, 5.0, 5.0);	
-	sta = f;
+#include <vector>
 
-}
+using namespace cv;
+using namespace std;
+cv::Mat src = cv::imread("../dataSet/playground/back.png", cv::IMREAD_GRAYSCALE);
+
+static Mat drawing = Mat::zeros( src.size(), CV_8UC3 );
 int main()
 {
-		cv::Mat A = (cv::Mat_<double>(2,2) << 1.0, 2.0, 3.0, 4.0);
-		cv::Mat C = (cv::Mat_<double>(2,2) << 5555,2.0, 3.0, 4.0);
-		std::cout << "Original A:\n" << A << std::endl;
-		
-		cv::Mat B = A;
-		B.at<double>(0, 1) = 2.5;
-		std::cout << "A:\n" << A << std::endl;
+	cv::Mat mask = cv::Mat::zeros(src.size(), src.type());
+	std::cout << src.rows/2 << std::endl;
+	std::cout << src.cols << std::endl;
+	std::cout << mask.rows/2 << std::endl;
+	std::cout << mask.cols << std::endl;
 
-		A = C;
-		C.at<double>(1, 1) = 28282;
-		std::cout << "A:\n" << A << std::endl;
+	//mask=(mask&cv::Scalar(255));
+	mask(cv::Range(0,mask.rows),cv::Range(0,mask.cols/2))=255;
+	cv::Mat res;
+	//res = src&mask;
+	// bitwise_and(src,src,res,mask);
+	// bitwise_and(src,mask,src);
+	std::vector<vector<Point> > contours;
+	std::vector<Vec4i> hierarchy;
+  	cv::findContours(src, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 
-		func();
-		std::cout << "sta:\n" << sta << std::endl;
-		int x = 1;
-		int a[2]={2,4};
-		a[x%1] = 0;
-		std::cout << a[0] << std::endl;
+	for( int i = 0; i< contours.size(); i++ )
+		{
+			Scalar color = Scalar( 0,255,255 );
+			drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point(0,0) );
+		}
+	cv::imshow("origin", src);
+	cv::imshow("mask", mask);
+	cv::imshow("contours", drawing);
+	cv::waitKey(0);
 
 }
